@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Monitor from './components/Monitor'
-import Mouse from './components/Mouse'
-import Total from './components/Total'
-import MyContext from './context/MyContext'
-import Stepper from './quiz02/Stepper'
-import Content from './quiz02/Content'
+import { useState } from 'react';
+import './App.css';
+import Stepper from './quiz02/Stepper';
+import Content from './quiz02/Content';
 
 function App() {
 
@@ -17,18 +13,32 @@ function App() {
     { id:6, step:3, name: 'Tablet', price: 100 },
     { id:7, step:3, name: 'Hub', price: 110 }
   ];
-  
+
+  const [step, setStep] = useState(1);
+
+  const handlePrev = () => {
+    setStep((prevStep) => Math.max(prevStep - 1, 1));
+  };
+
+  const handleNext = () => {
+    setStep((prevStep) => Math.min(prevStep + 1, 3));
+  };
+
   return (
     <>
       <h1>Quiz 02</h1>
-       <Stepper/>
-       <Content/>
-      <div className='flex'>
-        <button type="button">Prev</button>
-        <button type="button">Next</button>
+      <Stepper step={step} setStep={setStep} />
+      <Content />
+      <div className="flex">
+        <button type="button" onClick={handlePrev} disabled={step === 1}>
+          Prev
+        </button>
+        <button type="button" onClick={handleNext} disabled={step === 3}>
+          Next
+        </button>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
